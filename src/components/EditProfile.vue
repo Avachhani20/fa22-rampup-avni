@@ -17,6 +17,27 @@ const fetchProfile = () => {
 
 /* ADD JAVASCRIPT CODE HERE */
 
+const editProfileName = () => {
+    console.log(profile.Age.value);
+    let new_body = {
+        'Name': profile.Name.value,
+        'Age': profile.Age.value,
+        'Bio': profile.Bio.value,
+        'Likes': profile.Likes,
+        'Link': profile.Link.value,
+    }
+
+    fetch(`http://timoth.yt/api/rampup?name=${profile.Name.value}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(new_body)
+    })
+
+}
+
+
 </script>
 
 <template>
@@ -26,8 +47,19 @@ const fetchProfile = () => {
         <input id="profileName" v-model="profileName" required>
         <input type="submit" @click="fetchProfile()">
     </form>
+    <div v-if="profile">
+        <form onsubmit="return false">
+        <input id="name" v-model="profile.Name" placeholder="First Name">
+        <input id="age" v-model="profile.Age" placeholder="First Name">
+        <input id="bio" v-model="profile.Bio" placeholder="First Name">
+        <!-- <div v-for="(item, index) in profile.Likes" :key="item.id">
+            {{index}}: {{item}}
+        </div> -->
+        <input id="link" v-model="profile.Link" placeholder="First Name">
+        <input type="submit" @click="editProfileName()">
+        </form>
+    </div>
 
-    {{ profile }}
 
 </template>
 
@@ -39,6 +71,18 @@ const fetchProfile = () => {
     border-radius: 5px;
 }
 
-/* EDIT CSS STYLING HERE */
+.sub-form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
 
+.pair {
+    display: flex;
+    flex-direction: column;
+}
+
+.pair input {
+    min-width: 250px;
+}
 </style>
